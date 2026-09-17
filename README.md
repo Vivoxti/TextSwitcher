@@ -1,6 +1,6 @@
 # TextSwitcher
 
-A fully local macOS menu bar app that fixes text typed in the wrong keyboard layout: `Ghbdtn Vbh` → `Привет Мир`.
+A fully local macOS menu bar app that fixes text typed in the wrong keyboard layout: `Руддщ Цщкдв!` → `Hello World!`.
 
 ![TextSwitcher settings](docs/settings.jpg)
 
