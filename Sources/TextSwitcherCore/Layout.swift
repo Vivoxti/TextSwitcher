@@ -5,10 +5,10 @@ public enum KeyboardLayout: String, CaseIterable, Codable, Identifiable {
     public var id: String { rawValue }
     public var title: String {
         switch self {
-        case .english: return "English · US"
-        case .russian: return "Русский · ЙЦУКЕН"
-        case .ukrainian: return "Українська · ЙЦУКЕН"
-        case .greek: return "Ελληνικά · Greek"
+        case .english: return L10n.text(.layoutEnglish)
+        case .russian: return L10n.text(.layoutRussian)
+        case .ukrainian: return L10n.text(.layoutUkrainian)
+        case .greek: return L10n.text(.layoutGreek)
         }
     }
     // Corresponding physical positions, including punctuation positions.

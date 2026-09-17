@@ -6,14 +6,14 @@ enum ReplacementFailure: LocalizedError {
     case permission, noField, secureField, focusChanged, copyFailed, selectFailed, pasteFailed, unsupportedClipboard
     var errorDescription: String? {
         switch self {
-        case .permission: return "Разрешите TextSwitcher универсальный доступ в Системных настройках."
-        case .noField: return "Поместите курсор в поле ввода. Не удалось определить редактируемое поле."
-        case .secureField: return "Поля паролей не поддерживаются."
-        case .focusChanged: return "Фокус или выделение изменились. Повторите нажатие в нужном поле."
-        case .copyFailed: return "Поле не ответило на ⌘C. Проверьте, что курсор находится в тексте."
-        case .selectFailed: return "Приложение не разрешило выделить всё поле."
-        case .pasteFailed: return "Не удалось отправить команду вставки."
-        case .unsupportedClipboard: return "Не удалось определить выделение в этой версии Sublime Text."
+        case .permission: return L10n.text(.permissionError)
+        case .noField: return L10n.text(.noFieldError)
+        case .secureField: return L10n.text(.secureFieldError)
+        case .focusChanged: return L10n.text(.focusChangedError)
+        case .copyFailed: return L10n.text(.copyFailedError)
+        case .selectFailed: return L10n.text(.selectFailedError)
+        case .pasteFailed: return L10n.text(.pasteFailedError)
+        case .unsupportedClipboard: return L10n.text(.unsupportedClipboardError)
         }
     }
 }

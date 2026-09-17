@@ -29,8 +29,8 @@ final class SettingsModel: ObservableObject {
         do {
             if enabled { try SMAppService.mainApp.register() } else { try SMAppService.mainApp.unregister() }
             refresh()
-            if SMAppService.mainApp.status == .requiresApproval { message = "Подтвердите автозапуск в Системных настройках."; SMAppService.openSystemSettingsLoginItems() }
-        } catch { refresh(); message = "Не удалось изменить автозапуск: \(error.localizedDescription)" }
+            if SMAppService.mainApp.status == .requiresApproval { message = L10n.text(.loginApproval); SMAppService.openSystemSettingsLoginItems() }
+        } catch { refresh(); message = L10n.text(.loginFailed) + " " + error.localizedDescription }
     }
     func requestAccessibility() {
         let options = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true] as CFDictionary
@@ -41,7 +41,7 @@ final class SettingsModel: ObservableObject {
     func stopRecording() { recording = false; recordingChanged?(false) }
     func save(_ shortcut: Shortcut) {
         guard recording else { return }
-        guard updateShortcut?(shortcut) == true else { message = "Не удалось назначить клавишу. Проверьте универсальный доступ или выберите другое сочетание."; return }
+        guard updateShortcut?(shortcut) == true else { message = L10n.text(.shortcutFailed); return }
         self.shortcut = shortcut
         UserDefaults.standard.set(try? JSONEncoder().encode(shortcut), forKey: "automaticShortcut")
         stopRecording()
@@ -57,54 +57,54 @@ struct SettingsView: View {
                 Image(systemName: "character.cursor.ibeam").font(.system(size: 29, weight: .medium)).foregroundStyle(Color.accentColor)
                 VStack(alignment: .leading, spacing: 3) {
                     Text("TextSwitcher").font(.system(size: 22, weight: .semibold))
-                    Text("Исправьте текст в другой раскладке").foregroundStyle(.secondary)
+                    Text(L10n.text(.subtitle)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
                 }
             }
             GroupBox {
                 VStack(spacing: 14) {
                     HStack {
-                        Text("Раскладки").frame(width: 95, alignment: .leading)
-                        Picker("Первая раскладка", selection: $model.first) { ForEach(KeyboardLayout.allCases) { Text($0.title).tag($0) } }.labelsHidden()
+                        Text(L10n.text(.layouts)).fixedSize().frame(minWidth: 75, alignment: .leading)
+                        Picker(L10n.text(.firstLayout), selection: $model.first) { ForEach(KeyboardLayout.allCases) { Text($0.title).tag($0) } }.labelsHidden()
                         Image(systemName: "arrow.left.arrow.right").foregroundStyle(.secondary)
-                        Picker("Вторая раскладка", selection: $model.second) { ForEach(KeyboardLayout.allCases) { Text($0.title).tag($0) } }.labelsHidden()
+                        Picker(L10n.text(.secondLayout), selection: $model.second) { ForEach(KeyboardLayout.allCases) { Text($0.title).tag($0) } }.labelsHidden()
                     }
                     Divider()
                     HStack {
-                        Text("Исправить раскладку")
+                        Text(L10n.text(.convert)).fixedSize(horizontal: false, vertical: true)
                         Spacer()
-                        Button(model.recording ? "Нажмите клавиши…" : model.shortcut.display) { model.startRecording() }
+                        Button(model.recording ? L10n.text(.recordShortcut) : model.shortcut.display) { model.startRecording() }
                             .font(.system(.body, design: .monospaced)).frame(minWidth: 140)
-                            .accessibilityLabel("Изменить горячую клавишу")
+                            .accessibilityLabel(L10n.text(.changeShortcut))
                     }
-                    Text("Есть выделение — меняется только оно. Нет выделения — всё активное поле.")
-                        .font(.callout).foregroundStyle(.secondary).frame(maxWidth: .infinity, alignment: .leading)
+                    Text(L10n.text(.automaticHint))
+                        .font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true).frame(maxWidth: .infinity, alignment: .leading)
                 }.padding(10)
             }
             if !model.compatible {
-                Label("Выберите раскладки с разными алфавитами: иначе нельзя определить направление для каждой буквы.", systemImage: "exclamationmark.triangle").font(.callout).foregroundStyle(.orange)
+                Label(L10n.text(.incompatible), systemImage: "exclamationmark.triangle").font(.callout).foregroundStyle(.orange).fixedSize(horizontal: false, vertical: true)
             }
             VStack(alignment: .leading, spacing: 12) {
-                Toggle("Запускать при входе в macOS", isOn: Binding(get: { model.launchEnabled }, set: { model.setLaunch($0) }))
+                Toggle(L10n.text(.launchAtLogin), isOn: Binding(get: { model.launchEnabled }, set: { model.setLaunch($0) }))
                 HStack {
                     Image(systemName: model.trusted ? "checkmark.circle.fill" : "lock.fill").foregroundStyle(model.trusted ? .green : .orange)
-                    Text(model.trusted ? "Универсальный доступ разрешён" : "Нужен универсальный доступ").font(.callout)
+                    Text(model.trusted ? L10n.text(.accessibilityAllowed) : L10n.text(.accessibilityRequired)).font(.callout).fixedSize(horizontal: false, vertical: true)
                     Spacer()
-                    if !model.trusted { Button("Разрешить…") { model.requestAccessibility() } }
+                    if !model.trusted { Button(L10n.text(.allow)) { model.requestAccessibility() } }
                 }
             }
-            Text("Только буквы, с сохранением регистра. Цифры и знаки остаются как есть. Буквы на клавишах со знаками тоже не меняются.")
+            Text(L10n.text(.lettersHint))
                 .font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             if model.recording {
-                Text("Нажмите и отпустите Shift, либо задайте сочетание с ⌘, ⌃, ⌥ или F1–F20. Esc — отмена.").font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                Text(L10n.text(.recordingHint)).font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             } else if model.shortcut.isShift {
-                Text("Shift срабатывает при коротком нажатии и отпускании. Набор заглавных букв и выделение с Shift не запускают замену.").font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                Text(L10n.text(.shiftHint)).font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             }
             if !model.message.isEmpty { Text(model.message).font(.callout).foregroundStyle(.orange).fixedSize(horizontal: false, vertical: true) }
             Divider()
             HStack {
-                Label("Всё обрабатывается на этом Mac", systemImage: "desktopcomputer").font(.caption).foregroundStyle(.secondary)
+                Label(L10n.text(.localOnly), systemImage: "desktopcomputer").font(.caption).foregroundStyle(.secondary)
                 Spacer()
-                Text("1.1").font(.caption).foregroundStyle(.tertiary)
+                Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.2.0").font(.caption).foregroundStyle(.tertiary)
             }
         }
         .padding(26).frame(width: 560)

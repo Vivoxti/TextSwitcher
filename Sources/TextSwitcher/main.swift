@@ -21,14 +21,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let title = NSMenuItem(title: "TextSwitcher", action: nil, keyEquivalent: "")
         title.isEnabled = false; menu.addItem(title)
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Настройки…", action: #selector(showSettings), keyEquivalent: ",").target = self
+        menu.addItem(withTitle: L10n.text(.settingsMenu), action: #selector(showSettings), keyEquivalent: ",").target = self
         menu.addItem(.separator())
-        menu.addItem(withTitle: "Завершить TextSwitcher", action: #selector(quit), keyEquivalent: "q").target = self
+        menu.addItem(withTitle: L10n.text(.quitMenu), action: #selector(quit), keyEquivalent: "q").target = self
         statusItem.menu = menu
         hotkeys.onPress = { [weak self] _ in
             guard let self, !self.model.recording,
                   NSWorkspace.shared.frontmostApplication?.processIdentifier != ProcessInfo.processInfo.processIdentifier else { return }
-            guard self.model.compatible else { self.model.message = "Выберите раскладки с разными алфавитами."; self.showSettings(); return }
+            guard self.model.compatible else { self.model.message = L10n.text(.incompatibleShort); self.showSettings(); return }
             let converter = LayoutConverter(first: self.model.first, second: self.model.second)
             Task { @MainActor in
                 do {
@@ -67,7 +67,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
     private func registerShortcuts() {
         if !hotkeys.register(model.shortcut, id: 1) {
-            model.message = "Не удалось зарегистрировать горячую клавишу. Проверьте разрешение или выберите свободное сочетание."
+            model.message = L10n.text(.registrationFailed)
         }
     }
     private func showError(_ message: String) {
@@ -92,7 +92,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         if settingsWindow == nil {
             let view = NSHostingView(rootView: SettingsView(model: model))
             let window = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 560, height: 440), styleMask: [.titled, .closable], backing: .buffered, defer: false)
-            window.title = "Настройки TextSwitcher"
+            window.title = L10n.text(.settingsTitle)
             window.contentView = view
             window.isReleasedWhenClosed = false
             window.center()

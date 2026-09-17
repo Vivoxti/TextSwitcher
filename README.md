@@ -9,6 +9,7 @@ A fully local macOS menu bar app that fixes text typed in the wrong keyboard lay
 - Choose two layouts: English US, Russian, Ukrainian, or Greek. The two layouts must use different alphabets.
 - Letter case is preserved. Numbers, punctuation, emoji, and letters paired with punctuation keys stay unchanged.
 - Optional launch at login. No accounts, analytics, network requests, or external dependencies.
+- Interface follows macOS language preferences: English, Russian, Ukrainian, German, French, Spanish, Italian, Portuguese, Polish, Japanese, Korean, and Simplified or Traditional Chinese. English is the fallback.
 
 ## Build & run
 

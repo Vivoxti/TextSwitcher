@@ -15,7 +15,17 @@ struct Shortcut: Codable, Equatable {
         if modifiers & UInt32(optionKey) != 0 { text += "⌥" }
         if modifiers & UInt32(shiftKey) != 0 { text += "⇧" }
         if modifiers & UInt32(cmdKey) != 0 { text += "⌘" }
-        return text + Self.keyNames[keyCode, default: "Key \(keyCode)"]
+        let label: String
+        switch keyCode {
+        case 49: label = L10n.text(.keySpace)
+        case 65: label = L10n.text(.keyDecimal)
+        case 115: label = L10n.text(.keyHome)
+        case 119: label = L10n.text(.keyEnd)
+        case 116: label = L10n.text(.keyPageUp)
+        case 121: label = L10n.text(.keyPageDown)
+        default: label = Self.keyNames[keyCode] ?? "\(L10n.text(.keyUnknown)) \(keyCode)"
+        }
+        return text + label
     }
     static let keyNames: [UInt32: String] = [
         0:"A",1:"S",2:"D",3:"F",4:"H",5:"G",6:"Z",7:"X",8:"C",9:"V",11:"B",
