@@ -2,7 +2,7 @@
 
 A fully local macOS menu bar app that fixes text typed in the wrong keyboard layout: `Руддщ Цщкдв!` → `Hello World!`.
 
-![TextSwitcher settings](docs/settings.jpg)
+![TextSwitcher settings](docs/settings.png)
 
 - Tap **Shift** to convert selected text. With no selection, the app converts the entire active text field.
 - Shift used for typing or selecting text does not trigger conversion. You can also assign a different shortcut.
