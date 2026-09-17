@@ -41,7 +41,3 @@ Allow TextSwitcher in **System Settings → Privacy & Security → Accessibility
 The app temporarily uses and restores the clipboard. Its temporary writes are restricted to the current Mac and marked as transient and concealed for compatible clipboard managers. Clipboard access is shared with other local apps; fallback copying in custom editors is controlled by that editor and may still be captured or synced. Rich text formatting may change, and some custom editors may not be supported. Builds enable Hardened Runtime and are signed ad hoc; rebuilding may require granting Accessibility access again.
 
 Composition-based input methods, such as Chinese and Japanese IMEs, are not supported. Conversion uses ordinary, Shift, and Caps Lock keys; Option-only characters and dead-key compositions are left unchanged.
-
-[Usage and implementation notes (Russian)](docs/usage.md)
-
-[Security review and privacy limitations (Russian)](docs/security.md)
