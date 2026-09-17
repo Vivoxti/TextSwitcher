@@ -12,6 +12,16 @@ A fully local macOS menu bar app that fixes text typed in the wrong keyboard lay
 - Optional launch at login. No accounts, analytics, network requests, or external dependencies.
 - Interface follows macOS language preferences: English, Russian, Ukrainian, German, French, Spanish, Italian, Portuguese, Polish, Japanese, Korean, and Simplified or Traditional Chinese. English is the fallback.
 
+## Download
+
+Download **TextSwitcher-1.3.0-universal.zip** from the [latest release](https://github.com/Vivoxti/TextSwitcher/releases/latest). Requires **macOS 13+**, on Apple Silicon or Intel.
+
+1. Unzip and move **TextSwitcher.app** to **Applications**.
+2. Open the app. This release is signed ad hoc and is not notarized by Apple. If macOS blocks it, go to **System Settings → Privacy & Security → Open Anyway**, then open it again. See [Apple's instructions](https://support.apple.com/en-us/102445).
+3. Enable TextSwitcher in **System Settings → Privacy & Security → Accessibility**.
+
+Use the menu bar icon to choose two system keyboard layouts and enable launch at login if desired.
+
 ## Build & run
 
 Requires **macOS 13+** and the Swift 6 toolchain (Xcode Command Line Tools).
@@ -23,6 +33,8 @@ mkdir -p ~/Applications
 ditto dist/TextSwitcher.app ~/Applications/TextSwitcher.app
 open ~/Applications/TextSwitcher.app
 ```
+
+For a universal build supporting both Apple Silicon and Intel, run `zsh scripts/build.sh --universal`.
 
 Allow TextSwitcher in **System Settings → Privacy & Security → Accessibility**. Settings are available from its menu bar icon.
 
