@@ -28,8 +28,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         hotkeys.onPress = { [weak self] _ in
             guard let self, !self.model.recording,
                   NSWorkspace.shared.frontmostApplication?.processIdentifier != ProcessInfo.processInfo.processIdentifier else { return }
-            guard self.model.compatible else { self.model.message = L10n.text(.incompatibleShort); self.showSettings(); return }
-            let converter = LayoutConverter(first: self.model.first, second: self.model.second)
+            guard let converter = self.model.converter() else { self.showError(self.model.message); return }
             Task { @MainActor in
                 do {
                     try await self.replacement.replace(converter: converter)

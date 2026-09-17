@@ -3,12 +3,12 @@ import Foundation
 public enum L10n {
     public enum Key: String, CaseIterable {
         case subtitle, layouts, firstLayout, secondLayout, convert, recordShortcut, changeShortcut
-        case automaticHint, incompatible, launchAtLogin, accessibilityAllowed, accessibilityRequired
+        case automaticHint, launchAtLogin, accessibilityAllowed, accessibilityRequired
         case allow, lettersHint, recordingHint, shiftHint, localOnly, settingsTitle, settingsMenu, quitMenu
-        case loginApproval, loginFailed, shortcutFailed, registrationFailed, incompatibleShort
+        case loginApproval, loginFailed, shortcutFailed, registrationFailed
         case permissionError, noFieldError, secureFieldError, focusChangedError, copyFailedError
         case selectFailedError, pasteFailedError, unsupportedClipboardError
-        case layoutEnglish, layoutRussian, layoutUkrainian, layoutGreek
+        case systemLayoutsHint, chooseTwoLayouts, activeLayoutRequired, unsupportedSources
         case keySpace, keyDecimal, keyHome, keyEnd, keyPageUp, keyPageDown, keyUnknown
     }
     public static let supportedLanguages = ["en", "ru", "uk", "de", "fr", "es", "it", "pt", "pl", "ja", "ko", "zh-Hans", "zh-Hant"]

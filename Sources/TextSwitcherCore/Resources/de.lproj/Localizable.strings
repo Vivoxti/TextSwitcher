@@ -6,7 +6,6 @@
 "recordShortcut" = "Tasten drücken…";
 "changeShortcut" = "Kurzbefehl ändern";
 "automaticHint" = "Markierter Text wird konvertiert. Ohne Auswahl wird das gesamte aktive Feld konvertiert.";
-"incompatible" = "Wähle Layouts mit unterschiedlichen Alphabeten, damit die Richtung für jeden Buchstaben erkennbar ist.";
 "launchAtLogin" = "Bei der Anmeldung starten";
 "accessibilityAllowed" = "Bedienungshilfen erlaubt";
 "accessibilityRequired" = "Zugriff auf Bedienungshilfen erforderlich";
@@ -22,7 +21,6 @@
 "loginFailed" = "Start bei der Anmeldung konnte nicht geändert werden:";
 "shortcutFailed" = "Kurzbefehl konnte nicht zugewiesen werden. Prüfe die Bedienungshilfen oder wähle einen anderen Kurzbefehl.";
 "registrationFailed" = "Kurzbefehl konnte nicht registriert werden. Prüfe die Berechtigung oder wähle einen freien Kurzbefehl.";
-"incompatibleShort" = "Wähle Layouts mit unterschiedlichen Alphabeten.";
 "permissionError" = "Erlaube TextSwitcher den Zugriff auf Bedienungshilfen in den Systemeinstellungen.";
 "noFieldError" = "Setze den Cursor in ein Textfeld. Das bearbeitbare Feld wurde nicht erkannt.";
 "secureFieldError" = "Passwortfelder werden nicht unterstützt.";
@@ -31,10 +29,6 @@
 "selectFailedError" = "Die App erlaubt keine Auswahl des gesamten Feldes.";
 "pasteFailedError" = "Der Einfügebefehl konnte nicht gesendet werden.";
 "unsupportedClipboardError" = "Die Auswahl konnte in dieser Version von Sublime Text nicht erkannt werden.";
-"layoutEnglish" = "Englisch · US";
-"layoutRussian" = "Russisch · ЙЦУКЕН";
-"layoutUkrainian" = "Ukrainisch · ЙЦУКЕН";
-"layoutGreek" = "Griechisch · Ελληνικά";
 "keySpace" = "Leertaste";
 "keyDecimal" = "Dezimalzeichen";
 "keyHome" = "Pos1";
@@ -42,3 +36,7 @@
 "keyPageUp" = "Bild auf";
 "keyPageDown" = "Bild ab";
 "keyUnknown" = "Taste";
+"systemLayoutsHint" = "Layouts aus macOS. Mehrdeutige Buchstaben werden vom aktiven ins andere gewählte Layout konvertiert.";
+"chooseTwoLayouts" = "Wähle zwei unterschiedliche, in macOS aktivierte Layouts.";
+"activeLayoutRequired" = "Wechsle zu einem gewählten Layout, um die Konvertierungsrichtung festzulegen.";
+"unsupportedSources" = "Für direkte Buchstabenkonvertierung nicht verfügbar:";

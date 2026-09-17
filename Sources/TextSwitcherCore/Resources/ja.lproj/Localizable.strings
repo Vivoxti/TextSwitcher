@@ -6,7 +6,6 @@
 "recordShortcut" = "キーを押してください…";
 "changeShortcut" = "ショートカットを変更";
 "automaticHint" = "選択したテキストを変換します。選択がない場合は、現在の入力欄全体を変換します。";
-"incompatible" = "文字ごとの変換方向を判別できるよう、異なる文字体系の配列を選んでください。";
 "launchAtLogin" = "ログイン時に起動";
 "accessibilityAllowed" = "アクセシビリティのアクセスを許可済み";
 "accessibilityRequired" = "アクセシビリティのアクセスが必要";
@@ -22,7 +21,6 @@
 "loginFailed" = "ログイン時の起動を変更できませんでした：";
 "shortcutFailed" = "ショートカットを設定できませんでした。アクセシビリティの許可を確認するか、別のショートカットを選んでください。";
 "registrationFailed" = "ショートカットを登録できませんでした。許可を確認するか、利用可能なショートカットを選んでください。";
-"incompatibleShort" = "異なる文字体系の配列を選んでください。";
 "permissionError" = "システム設定でTextSwitcherのアクセシビリティへのアクセスを許可してください。";
 "noFieldError" = "入力欄にカーソルを置いてください。編集可能な欄を確認できませんでした。";
 "secureFieldError" = "パスワード欄には対応していません。";
@@ -31,10 +29,6 @@
 "selectFailedError" = "アプリで入力欄全体を選択できませんでした。";
 "pasteFailedError" = "貼り付けコマンドを送信できませんでした。";
 "unsupportedClipboardError" = "このバージョンのSublime Textでは選択範囲を確認できませんでした。";
-"layoutEnglish" = "英語 · US";
-"layoutRussian" = "ロシア語 · ЙЦУКЕН";
-"layoutUkrainian" = "ウクライナ語 · ЙЦУКЕН";
-"layoutGreek" = "ギリシャ語 · Ελληνικά";
 "keySpace" = "スペース";
 "keyDecimal" = "小数点";
 "keyHome" = "Home";
@@ -42,3 +36,7 @@
 "keyPageUp" = "Page Up";
 "keyPageDown" = "Page Down";
 "keyUnknown" = "キー";
+"systemLayoutsHint" = "macOSで有効な配列です。曖昧な文字は現在の配列からもう一方の選択した配列へ変換します。";
+"chooseTwoLayouts" = "macOSで有効な異なる2つの配列を選んでください。";
+"activeLayoutRequired" = "変換方向を決めるには、選択したいずれかの配列に切り替えてください。";
+"unsupportedSources" = "文字の直接変換には対応していません：";

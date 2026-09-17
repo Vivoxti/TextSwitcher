@@ -6,7 +6,6 @@
 "recordShortcut" = "Naciśnij klawisze…";
 "changeShortcut" = "Zmień skrót";
 "automaticHint" = "Konwertowany jest zaznaczony tekst. Bez zaznaczenia konwertowane jest całe aktywne pole.";
-"incompatible" = "Wybierz układy z różnymi alfabetami, aby rozpoznać kierunek konwersji każdej litery.";
 "launchAtLogin" = "Uruchamiaj po zalogowaniu";
 "accessibilityAllowed" = "Dostęp do funkcji Dostępność przyznany";
 "accessibilityRequired" = "Wymagany dostęp do funkcji Dostępność";
@@ -22,7 +21,6 @@
 "loginFailed" = "Nie udało się zmienić uruchamiania po zalogowaniu:";
 "shortcutFailed" = "Nie udało się przypisać skrótu. Sprawdź dostęp do funkcji Dostępność lub wybierz inny skrót.";
 "registrationFailed" = "Nie udało się zarejestrować skrótu. Sprawdź uprawnienia lub wybierz wolny skrót.";
-"incompatibleShort" = "Wybierz układy z różnymi alfabetami.";
 "permissionError" = "Zezwól TextSwitcher na dostęp do funkcji Dostępność w Ustawieniach systemowych.";
 "noFieldError" = "Umieść kursor w polu tekstowym. Nie udało się rozpoznać edytowalnego pola.";
 "secureFieldError" = "Pola haseł nie są obsługiwane.";
@@ -31,10 +29,6 @@
 "selectFailedError" = "Aplikacja nie pozwoliła zaznaczyć całego pola.";
 "pasteFailedError" = "Nie udało się wysłać polecenia wklejania.";
 "unsupportedClipboardError" = "Nie udało się rozpoznać zaznaczenia w tej wersji Sublime Text.";
-"layoutEnglish" = "Angielski · US";
-"layoutRussian" = "Rosyjski · ЙЦУКЕН";
-"layoutUkrainian" = "Ukraiński · ЙЦУКЕН";
-"layoutGreek" = "Grecki · Ελληνικά";
 "keySpace" = "Spacja";
 "keyDecimal" = "Separator dziesiętny";
 "keyHome" = "Początek";
@@ -42,3 +36,7 @@
 "keyPageUp" = "Strona w górę";
 "keyPageDown" = "Strona w dół";
 "keyUnknown" = "Klawisz";
+"systemLayoutsHint" = "Układy z macOS. Niejednoznaczne litery są konwertowane z aktywnego układu na drugi wybrany.";
+"chooseTwoLayouts" = "Wybierz dwa różne układy włączone w macOS.";
+"activeLayoutRequired" = "Przełącz na jeden z wybranych układów, aby określić kierunek konwersji.";
+"unsupportedSources" = "Niedostępne do bezpośredniej konwersji liter:";

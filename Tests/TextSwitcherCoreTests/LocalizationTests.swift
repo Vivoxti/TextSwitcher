@@ -27,6 +27,6 @@ final class LocalizationTests: XCTestCase {
         XCTAssertEqual(L10n.text(.settingsMenu, language: "uk-UA"), "Параметри…")
         XCTAssertEqual(L10n.text(.secureFieldError, language: "uk"), "Поля паролів не підтримуються.")
         XCTAssertEqual(L10n.text(.settingsMenu, language: "cs"), "Settings…")
-        XCTAssertEqual(L10n.text(.layoutRussian, language: "en"), "Russian · ЙЦУКЕН")
+        XCTAssertEqual(L10n.text(.chooseTwoLayouts, language: "en"), "Choose two different layouts enabled in macOS.")
     }
 }

@@ -6,7 +6,6 @@
 "recordShortcut" = "Press keys…";
 "changeShortcut" = "Change shortcut";
 "automaticHint" = "Selected text is converted. With no selection, the entire active field is converted.";
-"incompatible" = "Choose layouts with different alphabets so each letter’s conversion direction can be identified.";
 "launchAtLogin" = "Launch at login";
 "accessibilityAllowed" = "Accessibility access granted";
 "accessibilityRequired" = "Accessibility access required";
@@ -22,7 +21,6 @@
 "loginFailed" = "Could not change launch at login:";
 "shortcutFailed" = "Could not assign the shortcut. Check Accessibility access or choose another shortcut.";
 "registrationFailed" = "Could not register the shortcut. Check permission or choose an available shortcut.";
-"incompatibleShort" = "Choose layouts with different alphabets.";
 "permissionError" = "Allow TextSwitcher Accessibility access in System Settings.";
 "noFieldError" = "Place the cursor in a text field. The editable field could not be identified.";
 "secureFieldError" = "Password fields are not supported.";
@@ -31,10 +29,6 @@
 "selectFailedError" = "The app did not allow selecting the entire field.";
 "pasteFailedError" = "Could not send the paste command.";
 "unsupportedClipboardError" = "Could not identify the selection in this version of Sublime Text.";
-"layoutEnglish" = "English · US";
-"layoutRussian" = "Russian · ЙЦУКЕН";
-"layoutUkrainian" = "Ukrainian · ЙЦУКЕН";
-"layoutGreek" = "Greek · Ελληνικά";
 "keySpace" = "Space";
 "keyDecimal" = "Decimal";
 "keyHome" = "Home";
@@ -42,3 +36,7 @@
 "keyPageUp" = "Page Up";
 "keyPageDown" = "Page Down";
 "keyUnknown" = "Key";
+"systemLayoutsHint" = "Layouts enabled in macOS. Ambiguous letters convert from the active layout to the other selected layout.";
+"chooseTwoLayouts" = "Choose two different layouts enabled in macOS.";
+"activeLayoutRequired" = "Switch to one of the selected layouts to determine the conversion direction.";
+"unsupportedSources" = "Unavailable for direct letter conversion:";

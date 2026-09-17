@@ -6,7 +6,6 @@
 "recordShortcut" = "Premi i tasti…";
 "changeShortcut" = "Modifica scorciatoia";
 "automaticHint" = "Viene convertito il testo selezionato. Senza selezione, viene convertito tutto il campo attivo.";
-"incompatible" = "Scegli layout con alfabeti diversi per identificare la direzione di conversione di ogni lettera.";
 "launchAtLogin" = "Apri all’accesso";
 "accessibilityAllowed" = "Accesso ad Accessibilità consentito";
 "accessibilityRequired" = "È richiesto l’accesso ad Accessibilità";
@@ -22,7 +21,6 @@
 "loginFailed" = "Impossibile modificare l’apertura all’accesso:";
 "shortcutFailed" = "Impossibile assegnare la scorciatoia. Controlla l’accesso ad Accessibilità o scegli un’altra scorciatoia.";
 "registrationFailed" = "Impossibile registrare la scorciatoia. Controlla il permesso o scegli una scorciatoia disponibile.";
-"incompatibleShort" = "Scegli layout con alfabeti diversi.";
 "permissionError" = "Consenti a TextSwitcher l’accesso ad Accessibilità in Impostazioni di Sistema.";
 "noFieldError" = "Posiziona il cursore in un campo di testo. Il campo modificabile non è stato identificato.";
 "secureFieldError" = "I campi password non sono supportati.";
@@ -31,10 +29,6 @@
 "selectFailedError" = "L’app non ha consentito di selezionare tutto il campo.";
 "pasteFailedError" = "Impossibile inviare il comando Incolla.";
 "unsupportedClipboardError" = "Impossibile identificare la selezione in questa versione di Sublime Text.";
-"layoutEnglish" = "Inglese · US";
-"layoutRussian" = "Russo · ЙЦУКЕН";
-"layoutUkrainian" = "Ucraino · ЙЦУКЕН";
-"layoutGreek" = "Greco · Ελληνικά";
 "keySpace" = "Spazio";
 "keyDecimal" = "Separatore decimale";
 "keyHome" = "Inizio";
@@ -42,3 +36,7 @@
 "keyPageUp" = "Pagina su";
 "keyPageDown" = "Pagina giù";
 "keyUnknown" = "Tasto";
+"systemLayoutsHint" = "Layout di macOS. Le lettere ambigue vengono convertite dal layout attivo all’altro layout scelto.";
+"chooseTwoLayouts" = "Scegli due layout diversi abilitati in macOS.";
+"activeLayoutRequired" = "Passa a uno dei layout scelti per determinare la direzione di conversione.";
+"unsupportedSources" = "Non disponibili per la conversione diretta delle lettere:";

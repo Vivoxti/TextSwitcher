@@ -6,7 +6,6 @@
 "recordShortcut" = "Appuyez sur les touches…";
 "changeShortcut" = "Modifier le raccourci";
 "automaticHint" = "Le texte sélectionné est converti. Sans sélection, tout le champ actif est converti.";
-"incompatible" = "Choisissez des dispositions avec des alphabets différents pour déterminer le sens de conversion de chaque lettre.";
 "launchAtLogin" = "Ouvrir à la connexion";
 "accessibilityAllowed" = "Accès à l’accessibilité autorisé";
 "accessibilityRequired" = "Accès à l’accessibilité requis";
@@ -22,7 +21,6 @@
 "loginFailed" = "Impossible de modifier l’ouverture à la connexion :";
 "shortcutFailed" = "Impossible d’attribuer le raccourci. Vérifiez l’accès à l’accessibilité ou choisissez-en un autre.";
 "registrationFailed" = "Impossible d’enregistrer le raccourci. Vérifiez l’autorisation ou choisissez un raccourci disponible.";
-"incompatibleShort" = "Choisissez des dispositions avec des alphabets différents.";
 "permissionError" = "Autorisez TextSwitcher dans Accessibilité, dans Réglages Système.";
 "noFieldError" = "Placez le curseur dans un champ de texte. Le champ modifiable n’a pas été identifié.";
 "secureFieldError" = "Les champs de mot de passe ne sont pas pris en charge.";
@@ -31,10 +29,6 @@
 "selectFailedError" = "L’application n’a pas permis de sélectionner tout le champ.";
 "pasteFailedError" = "Impossible d’envoyer la commande de collage.";
 "unsupportedClipboardError" = "Impossible d’identifier la sélection dans cette version de Sublime Text.";
-"layoutEnglish" = "Anglais · US";
-"layoutRussian" = "Russe · ЙЦУКЕН";
-"layoutUkrainian" = "Ukrainien · ЙЦУКЕН";
-"layoutGreek" = "Grec · Ελληνικά";
 "keySpace" = "Espace";
 "keyDecimal" = "Séparateur décimal";
 "keyHome" = "Début";
@@ -42,3 +36,7 @@
 "keyPageUp" = "Page précédente";
 "keyPageDown" = "Page suivante";
 "keyUnknown" = "Touche";
+"systemLayoutsHint" = "Dispositions de macOS. Les lettres ambiguës sont converties de la disposition active vers l’autre disposition choisie.";
+"chooseTwoLayouts" = "Choisissez deux dispositions différentes activées dans macOS.";
+"activeLayoutRequired" = "Passez à l’une des dispositions choisies pour déterminer le sens de conversion.";
+"unsupportedSources" = "Indisponibles pour la conversion directe des lettres :";

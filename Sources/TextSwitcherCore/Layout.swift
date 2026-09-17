@@ -1,46 +1,67 @@
 import Foundation
 
-public enum KeyboardLayout: String, CaseIterable, Codable, Identifiable {
-    case english, russian, ukrainian, greek
-    public var id: String { rawValue }
-    public var title: String {
-        switch self {
-        case .english: return L10n.text(.layoutEnglish)
-        case .russian: return L10n.text(.layoutRussian)
-        case .ukrainian: return L10n.text(.layoutUkrainian)
-        case .greek: return L10n.text(.layoutGreek)
+public struct KeyPosition: Hashable {
+    public let code: UInt16
+    public let modifiers: UInt32
+    public init(code: UInt16, modifiers: UInt32 = 0) { self.code = code; self.modifiers = modifiers }
+}
+
+public struct KeyboardLayout: Identifiable, Equatable {
+    public let id: String
+    public let title: String
+    public let characters: [KeyPosition: Character]
+    public init(id: String, title: String, characters: [KeyPosition: Character]) {
+        self.id = id; self.title = title; self.characters = characters
+    }
+    fileprivate var letters: Set<Character> {
+        var letters = Set(characters.values.filter(\.isLetter))
+        for letter in Array(letters) {
+            for variant in [String(letter).lowercased(), String(letter).uppercased()] where variant.count == 1 {
+                if let character = variant.first { letters.insert(character) }
+            }
         }
+        return letters
     }
-    // Corresponding physical positions, including punctuation positions.
-    public var keys: String {
-        switch self {
-        case .english: return "`qwertyuiop[]asdfghjkl;'zxcvbnm,."
-        case .russian: return "ёйцукенгшщзхъфывапролджэячсмитьбю"
-        case .ukrainian: return "'йцукенгшщзхїфівапролджєячсмитьбю"
-        case .greek: return "`;ςερτυθιοπ[]ασδφγηξκλ΄'ζχψωβνμ,."
-        }
-    }
-    private var script: Int {
-        switch self { case .english: return 0; case .russian, .ukrainian: return 1; case .greek: return 2 }
-    }
-    public func isCompatible(with other: KeyboardLayout) -> Bool { script != other.script }
 }
 
 public struct LayoutConverter {
     private let replacements: [Character: String]
-    public init(first: KeyboardLayout, second: KeyboardLayout) {
-        var map: [Character: String] = [:]
-        if first.isCompatible(with: second) {
-            for (a, b) in zip(first.keys, second.keys) where a.isLetter && b.isLetter {
-                map[a] = String(b)
-                map[b] = String(a)
-                map[Character(String(a).uppercased())] = String(b).uppercased()
-                map[Character(String(b).uppercased())] = String(a).uppercased()
+    public let requiresDirection: Bool
+    public init(first: KeyboardLayout, second: KeyboardLayout, activeSourceID: String? = nil) {
+        func mapping(from source: KeyboardLayout, to target: KeyboardLayout) -> [Character: String] {
+            var candidates: [Character: Set<String>] = [:]
+            for (position, a) in source.characters {
+                guard a.isLetter, let b = target.characters[position], b.isLetter else { continue }
+                let sameCase = a.isUppercase ? String(b).uppercased() : a.isLowercase ? String(b).lowercased() : String(b)
+                for (key, value) in [(String(a), sameCase), (String(a).lowercased(), String(b).lowercased()), (String(a).uppercased(), String(b).uppercased())] {
+                    guard key.count == 1, value.count == 1, let character = key.first else { continue }
+                    candidates[character, default: []].insert(value)
+                }
             }
+            // A letter occurring on several keys is converted only if its target
+            // is unambiguous; never choose a random key from a dictionary.
+            return candidates.compactMapValues { $0.count == 1 ? $0.first : nil }
+        }
+        let forward = mapping(from: first, to: second)
+        let reverse = mapping(from: second, to: first)
+        let firstLetters = first.letters
+        let secondLetters = second.letters
+        let shared = firstLetters.intersection(secondLetters)
+        requiresDirection = shared.contains { forward[$0] != reverse[$0] }
+        var map: [Character: String] = [:]
+        for letter in firstLetters.union(secondLetters) {
+            if shared.contains(letter) {
+                if forward[letter] == reverse[letter] { map[letter] = forward[letter] }
+                else if activeSourceID == first.id { map[letter] = forward[letter] }
+                else if activeSourceID == second.id { map[letter] = reverse[letter] }
+            } else { map[letter] = firstLetters.contains(letter) ? forward[letter] : reverse[letter] }
         }
         replacements = map
     }
     public func convert(_ text: String) -> String {
-        text.map { replacements[$0] ?? String($0) }.joined()
+        text.map { character in
+            let normalized = String(character).precomposedStringWithCanonicalMapping
+            return normalized.first.flatMap { replacements[$0] } ?? String(character)
+        }.joined()
     }
 }

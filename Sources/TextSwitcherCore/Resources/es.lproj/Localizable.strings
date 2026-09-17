@@ -6,7 +6,6 @@
 "recordShortcut" = "Pulsa las teclas…";
 "changeShortcut" = "Cambiar atajo";
 "automaticHint" = "Se convierte el texto seleccionado. Sin selección, se convierte todo el campo activo.";
-"incompatible" = "Elige distribuciones con alfabetos distintos para identificar la dirección de conversión de cada letra.";
 "launchAtLogin" = "Abrir al iniciar sesión";
 "accessibilityAllowed" = "Acceso a Accesibilidad concedido";
 "accessibilityRequired" = "Se requiere acceso a Accesibilidad";
@@ -22,7 +21,6 @@
 "loginFailed" = "No se pudo cambiar el inicio automático:";
 "shortcutFailed" = "No se pudo asignar el atajo. Comprueba el acceso a Accesibilidad o elige otro atajo.";
 "registrationFailed" = "No se pudo registrar el atajo. Comprueba el permiso o elige un atajo disponible.";
-"incompatibleShort" = "Elige distribuciones con alfabetos distintos.";
 "permissionError" = "Permite a TextSwitcher acceder a Accesibilidad en Ajustes del Sistema.";
 "noFieldError" = "Coloca el cursor en un campo de texto. No se pudo identificar el campo editable.";
 "secureFieldError" = "Los campos de contraseña no son compatibles.";
@@ -31,10 +29,6 @@
 "selectFailedError" = "La aplicación no permitió seleccionar todo el campo.";
 "pasteFailedError" = "No se pudo enviar el comando de pegar.";
 "unsupportedClipboardError" = "No se pudo identificar la selección en esta versión de Sublime Text.";
-"layoutEnglish" = "Inglés · US";
-"layoutRussian" = "Ruso · ЙЦУКЕН";
-"layoutUkrainian" = "Ucraniano · ЙЦУКЕН";
-"layoutGreek" = "Griego · Ελληνικά";
 "keySpace" = "Espacio";
 "keyDecimal" = "Separador decimal";
 "keyHome" = "Inicio";
@@ -42,3 +36,7 @@
 "keyPageUp" = "Re Pág";
 "keyPageDown" = "Av Pág";
 "keyUnknown" = "Tecla";
+"systemLayoutsHint" = "Distribuciones de macOS. Las letras ambiguas se convierten de la distribución activa a la otra elegida.";
+"chooseTwoLayouts" = "Elige dos distribuciones distintas activadas en macOS.";
+"activeLayoutRequired" = "Cambia a una de las distribuciones elegidas para determinar el sentido de conversión.";
+"unsupportedSources" = "No disponibles para la conversión directa de letras:";

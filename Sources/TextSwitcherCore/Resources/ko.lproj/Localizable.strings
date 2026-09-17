@@ -6,7 +6,6 @@
 "recordShortcut" = "키를 누르세요…";
 "changeShortcut" = "단축키 변경";
 "automaticHint" = "선택한 텍스트를 변환합니다. 선택 영역이 없으면 활성 입력 필드 전체를 변환합니다.";
-"incompatible" = "각 글자의 변환 방향을 구분할 수 있도록 서로 다른 문자 체계의 자판을 선택하세요.";
 "launchAtLogin" = "로그인 시 실행";
 "accessibilityAllowed" = "손쉬운 사용 접근 허용됨";
 "accessibilityRequired" = "손쉬운 사용 접근 필요";
@@ -22,7 +21,6 @@
 "loginFailed" = "로그인 시 실행을 변경할 수 없습니다:";
 "shortcutFailed" = "단축키를 지정할 수 없습니다. 손쉬운 사용 접근 권한을 확인하거나 다른 단축키를 선택하세요.";
 "registrationFailed" = "단축키를 등록할 수 없습니다. 권한을 확인하거나 사용 가능한 단축키를 선택하세요.";
-"incompatibleShort" = "서로 다른 문자 체계의 자판을 선택하세요.";
 "permissionError" = "시스템 설정에서 TextSwitcher의 손쉬운 사용 접근을 허용하세요.";
 "noFieldError" = "텍스트 입력 필드에 커서를 놓으세요. 편집 가능한 필드를 확인할 수 없습니다.";
 "secureFieldError" = "암호 필드는 지원하지 않습니다.";
@@ -31,10 +29,6 @@
 "selectFailedError" = "앱에서 필드 전체 선택을 허용하지 않았습니다.";
 "pasteFailedError" = "붙여넣기 명령을 보낼 수 없습니다.";
 "unsupportedClipboardError" = "이 버전의 Sublime Text에서는 선택 영역을 확인할 수 없습니다.";
-"layoutEnglish" = "영어 · US";
-"layoutRussian" = "러시아어 · ЙЦУКЕН";
-"layoutUkrainian" = "우크라이나어 · ЙЦУКЕН";
-"layoutGreek" = "그리스어 · Ελληνικά";
 "keySpace" = "스페이스";
 "keyDecimal" = "소수점";
 "keyHome" = "Home";
@@ -42,3 +36,7 @@
 "keyPageUp" = "Page Up";
 "keyPageDown" = "Page Down";
 "keyUnknown" = "키";
+"systemLayoutsHint" = "macOS에서 활성화된 자판입니다. 모호한 글자는 현재 자판에서 선택한 다른 자판으로 변환합니다.";
+"chooseTwoLayouts" = "macOS에서 활성화된 서로 다른 두 자판을 선택하세요.";
+"activeLayoutRequired" = "변환 방향을 결정하려면 선택한 자판 중 하나로 전환하세요.";
+"unsupportedSources" = "글자 직접 변환을 지원하지 않음:";

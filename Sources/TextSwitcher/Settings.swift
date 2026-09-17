@@ -5,8 +5,10 @@ import ApplicationServices
 import TextSwitcherCore
 
 final class SettingsModel: ObservableObject {
-    @Published var first: KeyboardLayout { didSet { UserDefaults.standard.set(first.rawValue, forKey: "firstLayout") } }
-    @Published var second: KeyboardLayout { didSet { UserDefaults.standard.set(second.rawValue, forKey: "secondLayout") } }
+    @Published var layouts: [KeyboardLayout] = []
+    @Published var unsupportedNames: [String] = []
+    @Published var first: String { didSet { UserDefaults.standard.set(first, forKey: "firstSourceID") } }
+    @Published var second: String { didSet { UserDefaults.standard.set(second, forKey: "secondSourceID") } }
     @Published var shortcut: Shortcut
     @Published var message: String = ""
     @Published var trusted = AXIsProcessTrusted()
@@ -14,13 +16,37 @@ final class SettingsModel: ObservableObject {
     @Published var recording = false
     var updateShortcut: ((Shortcut) -> Bool)?
     var recordingChanged: ((Bool) -> Void)?
+    private var sourcesObserver: NSObjectProtocol?
     init() {
         let defaults = UserDefaults.standard
-        first = KeyboardLayout(rawValue: defaults.string(forKey: "firstLayout") ?? "english") ?? .english
-        second = KeyboardLayout(rawValue: defaults.string(forKey: "secondLayout") ?? "russian") ?? .russian
+        first = defaults.string(forKey: "firstSourceID") ?? ""
+        second = defaults.string(forKey: "secondSourceID") ?? ""
         shortcut = defaults.data(forKey: "automaticShortcut").flatMap { try? JSONDecoder().decode(Shortcut.self, from: $0) } ?? .shift
+        refreshLayouts()
+        sourcesObserver = DistributedNotificationCenter.default().addObserver(forName: SystemLayouts.changeNotification, object: nil, queue: .main) { [weak self] _ in self?.refreshLayouts() }
     }
-    var compatible: Bool { first.isCompatible(with: second) }
+    deinit { if let sourcesObserver { DistributedNotificationCenter.default().removeObserver(sourcesObserver) } }
+    var compatible: Bool { first != second && layouts.contains { $0.id == first } && layouts.contains { $0.id == second } }
+    func refreshLayouts() {
+        let snapshot = SystemLayouts.enabled()
+        if layouts != snapshot.layouts { layouts = snapshot.layouts }
+        if unsupportedNames != snapshot.unsupportedNames { unsupportedNames = snapshot.unsupportedNames }
+        let ids = Set(layouts.map(\.id))
+        if !ids.contains(first) {
+            first = layouts.first { $0.id == SystemLayouts.currentID && $0.id != second }?.id ?? layouts.first { $0.id != second }?.id ?? layouts.first?.id ?? ""
+        }
+        if !ids.contains(second) { second = layouts.first { $0.id != first }?.id ?? "" }
+    }
+    func converter() -> LayoutConverter? {
+        refreshLayouts()
+        guard compatible, let a = layouts.first(where: { $0.id == first }), let b = layouts.first(where: { $0.id == second }) else {
+            message = L10n.text(.chooseTwoLayouts); return nil
+        }
+        let active = SystemLayouts.currentID
+        let converter = LayoutConverter(first: a, second: b, activeSourceID: active)
+        guard !converter.requiresDirection || active == first || active == second else { message = L10n.text(.activeLayoutRequired); return nil }
+        return converter
+    }
     func refresh() {
         trusted = AXIsProcessTrusted()
         launchEnabled = SMAppService.mainApp.status == .enabled || SMAppService.mainApp.status == .requiresApproval
@@ -64,10 +90,17 @@ struct SettingsView: View {
                 VStack(spacing: 14) {
                     HStack {
                         Text(L10n.text(.layouts)).fixedSize().frame(minWidth: 75, alignment: .leading)
-                        Picker(L10n.text(.firstLayout), selection: $model.first) { ForEach(KeyboardLayout.allCases) { Text($0.title).tag($0) } }.labelsHidden()
+                        Picker(L10n.text(.firstLayout), selection: $model.first) {
+                            if model.first.isEmpty { Text("—").tag("") }
+                            ForEach(model.layouts) { Text($0.title).tag($0.id) }
+                        }.labelsHidden()
                         Image(systemName: "arrow.left.arrow.right").foregroundStyle(.secondary)
-                        Picker(L10n.text(.secondLayout), selection: $model.second) { ForEach(KeyboardLayout.allCases) { Text($0.title).tag($0) } }.labelsHidden()
+                        Picker(L10n.text(.secondLayout), selection: $model.second) {
+                            if model.second.isEmpty { Text("—").tag("") }
+                            ForEach(model.layouts) { Text($0.title).tag($0.id) }
+                        }.labelsHidden()
                     }
+                    Text(L10n.text(.systemLayoutsHint)).font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true).frame(maxWidth: .infinity, alignment: .leading)
                     Divider()
                     HStack {
                         Text(L10n.text(.convert)).fixedSize(horizontal: false, vertical: true)
@@ -81,7 +114,10 @@ struct SettingsView: View {
                 }.padding(10)
             }
             if !model.compatible {
-                Label(L10n.text(.incompatible), systemImage: "exclamationmark.triangle").font(.callout).foregroundStyle(.orange).fixedSize(horizontal: false, vertical: true)
+                Label(L10n.text(.chooseTwoLayouts), systemImage: "exclamationmark.triangle").font(.callout).foregroundStyle(.orange).fixedSize(horizontal: false, vertical: true)
+            }
+            if !model.unsupportedNames.isEmpty {
+                Text(L10n.text(.unsupportedSources) + " " + model.unsupportedNames.joined(separator: ", ")).font(.callout).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             }
             VStack(alignment: .leading, spacing: 12) {
                 Toggle(L10n.text(.launchAtLogin), isOn: Binding(get: { model.launchEnabled }, set: { model.setLaunch($0) }))
@@ -104,7 +140,7 @@ struct SettingsView: View {
             HStack {
                 Label(L10n.text(.localOnly), systemImage: "desktopcomputer").font(.caption).foregroundStyle(.secondary)
                 Spacer()
-                Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.2.0").font(.caption).foregroundStyle(.tertiary)
+                Text(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.3.0").font(.caption).foregroundStyle(.tertiary)
             }
         }
         .padding(26).frame(width: 560)

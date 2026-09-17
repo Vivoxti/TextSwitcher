@@ -6,7 +6,6 @@
 "recordShortcut" = "请按下按键…";
 "changeShortcut" = "更改快捷键";
 "automaticHint" = "转换选中的文字。未选中文字时，转换当前输入框的全部内容。";
-"incompatible" = "请选择使用不同字母表的布局，以便判断每个字母的转换方向。";
 "launchAtLogin" = "登录时启动";
 "accessibilityAllowed" = "已允许辅助功能访问";
 "accessibilityRequired" = "需要辅助功能访问权限";
@@ -22,7 +21,6 @@
 "loginFailed" = "无法更改登录时启动：";
 "shortcutFailed" = "无法设置快捷键。请检查辅助功能权限或选择其他快捷键。";
 "registrationFailed" = "无法注册快捷键。请检查权限或选择可用的快捷键。";
-"incompatibleShort" = "请选择使用不同字母表的布局。";
 "permissionError" = "请在系统设置中允许 TextSwitcher 访问辅助功能。";
 "noFieldError" = "请将光标置于文字输入框中。无法识别可编辑的输入框。";
 "secureFieldError" = "不支持密码输入框。";
@@ -31,10 +29,6 @@
 "selectFailedError" = "应用不允许选择输入框的全部内容。";
 "pasteFailedError" = "无法发送粘贴命令。";
 "unsupportedClipboardError" = "无法识别此版本 Sublime Text 中的选区。";
-"layoutEnglish" = "英语 · US";
-"layoutRussian" = "俄语 · ЙЦУКЕН";
-"layoutUkrainian" = "乌克兰语 · ЙЦУКЕН";
-"layoutGreek" = "希腊语 · Ελληνικά";
 "keySpace" = "空格";
 "keyDecimal" = "小数点";
 "keyHome" = "Home";
@@ -42,3 +36,7 @@
 "keyPageUp" = "Page Up";
 "keyPageDown" = "Page Down";
 "keyUnknown" = "按键";
+"systemLayoutsHint" = "macOS 中已启用的布局。存在歧义的字母从当前布局转换到另一个选定布局。";
+"chooseTwoLayouts" = "请选择 macOS 中已启用的两个不同布局。";
+"activeLayoutRequired" = "请切换到一个选定布局，以确定转换方向。";
+"unsupportedSources" = "不支持直接字母转换：";
