@@ -1,5 +1,6 @@
 import AppKit
 import ApplicationServices
+import Carbon
 import TextSwitcherCore
 
 enum ReplacementFailure: LocalizedError {
@@ -37,7 +38,9 @@ enum ReplacementFailure: LocalizedError {
             var value: CFTypeRef?
             if AXUIElementCopyAttributeValue(root, kAXFocusedUIElementAttribute as CFString, &value) == .success,
                let value, CFGetTypeID(value) == AXUIElementGetTypeID() {
-                return (value as! AXUIElement)
+                let element = value as! AXUIElement
+                var owner: pid_t = 0
+                if AXUIElementGetPid(element, &owner) == .success, owner == pid { return element }
             }
         }
         return nil
@@ -59,6 +62,8 @@ enum ReplacementFailure: LocalizedError {
         return AXUIElementSetAttributeValue(element, kAXSelectedTextRangeAttribute as CFString, value) == .success
     }
     private func key(_ code: CGKeyCode, focus: Focus) throws {
+        guard !IsSecureEventInputEnabled(),
+              attribute(kAXSubroleAttribute, from: focus.element) as? String != kAXSecureTextFieldSubrole else { throw ReplacementFailure.secureField }
         guard focus.isCurrent() else { throw ReplacementFailure.focusChanged }
         guard let source = CGEventSource(stateID: .privateState),
               let down = CGEvent(keyboardEventSource: source, virtualKey: code, keyDown: true),
@@ -88,6 +93,7 @@ enum ReplacementFailure: LocalizedError {
         busy = true
         defer { busy = false }
         guard AXIsProcessTrusted() else { throw ReplacementFailure.permission }
+        guard !IsSecureEventInputEnabled() else { throw ReplacementFailure.secureField }
         guard let app = NSWorkspace.shared.frontmostApplication,
               app.processIdentifier != ProcessInfo.processInfo.processIdentifier else { throw ReplacementFailure.noField }
         let pid = app.processIdentifier
@@ -131,10 +137,12 @@ enum ReplacementFailure: LocalizedError {
                 else if isSublime { try? key(32, focus: focus) } // Sublime soft undo restores selection only.
             }
             if let ownedCount, pasteboard.changeCount == ownedCount {
-                pasteboard.clearContents()
+                // Do not re-advertise the saved clipboard to other devices.
+                pasteboard.prepareForNewContents(with: .currentHostOnly)
                 let items = saved.map { representations -> NSPasteboardItem in
                     let item = NSPasteboardItem()
                     representations.forEach { item.setData($0.1, forType: $0.0) }
+                    ClipboardPrivacy.markTemporary(item)
                     return item
                 }
                 if !items.isEmpty { pasteboard.writeObjects(items) }
@@ -164,9 +172,15 @@ enum ReplacementFailure: LocalizedError {
             try await Task.sleep(nanoseconds: 100_000_000)
             guard focus.isCurrent() else { throw ReplacementFailure.focusChanged }
             if let selection = range(of: element), selection.length == 0 { throw ReplacementFailure.selectFailed }
-            text = try await copiedText(focus: focus, ownedCount: &ownedCount)
-            if isSublime, text != nil, SublimeCopyKind(metadata: pasteboard.data(forType: Self.sublimeMetadata)) != .selection {
-                throw ReplacementFailure.selectFailed
+            // Read the selected field directly when available, avoiding an
+            // unnecessary copy through the globally visible pasteboard.
+            if !isSublime, let selected = attribute(kAXSelectedTextAttribute, from: element) as? String, !selected.isEmpty {
+                text = selected
+            } else {
+                text = try await copiedText(focus: focus, ownedCount: &ownedCount)
+                if isSublime, text != nil, SublimeCopyKind(metadata: pasteboard.data(forType: Self.sublimeMetadata)) != .selection {
+                    throw ReplacementFailure.selectFailed
+                }
             }
         } else if text == nil {
             text = selectedText
@@ -177,11 +191,12 @@ enum ReplacementFailure: LocalizedError {
         let converted = converter.convert(text)
         if converted == text { return }
         guard focus.isCurrent() else { throw ReplacementFailure.focusChanged }
+        if let ownedCount, pasteboard.changeCount != ownedCount { throw ReplacementFailure.focusChanged }
         if !all, let oldRange, let current = range(of: element),
            oldRange.location != current.location || oldRange.length != current.length { throw ReplacementFailure.focusChanged }
-        pasteboard.clearContents()
-        pasteboard.setString(converted, forType: .string)
+        let written = ClipboardPrivacy.writeTemporaryText(converted, to: pasteboard)
         ownedCount = pasteboard.changeCount
+        guard written else { throw ReplacementFailure.pasteFailed }
         try key(9, focus: focus)
         pasted = true
         try await Task.sleep(nanoseconds: 500_000_000)

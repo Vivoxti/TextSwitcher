@@ -22,5 +22,5 @@ done
 ditto "$BIN_DIR/TextSwitcher_TextSwitcherCore.bundle" "$APP/Contents/Resources/TextSwitcher_TextSwitcherCore.bundle"
 swift scripts/icon.swift "$PWD/.build/AppIcon.iconset"
 iconutil -c icns .build/AppIcon.iconset -o "$APP/Contents/Resources/AppIcon.icns"
-codesign --force --sign - --identifier local.textswitcher.app "$APP"
+codesign --force --sign - --options runtime --identifier local.textswitcher.app "$APP"
 print "Built: $APP"

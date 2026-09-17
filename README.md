@@ -14,7 +14,7 @@ A fully local macOS menu bar app that fixes text typed in the wrong keyboard lay
 
 ## Download
 
-Download **TextSwitcher-1.3.0-universal.zip** from the [latest release](https://github.com/Vivoxti/TextSwitcher/releases/latest). Requires **macOS 13+**, on Apple Silicon or Intel.
+Download **TextSwitcher-1.3.1-universal.zip** from the [latest release](https://github.com/Vivoxti/TextSwitcher/releases/latest). Requires **macOS 13+**, on Apple Silicon or Intel.
 
 1. Unzip and move **TextSwitcher.app** to **Applications**.
 2. Open the app. This release is signed ad hoc and is not notarized by Apple. If macOS blocks it, go to **System Settings → Privacy & Security → Open Anyway**, then open it again. See [Apple's instructions](https://support.apple.com/en-us/102445).
@@ -38,8 +38,10 @@ For a universal build supporting both Apple Silicon and Intel, run `zsh scripts/
 
 Allow TextSwitcher in **System Settings → Privacy & Security → Accessibility**. Settings are available from its menu bar icon.
 
-The app temporarily uses and restores the clipboard. Rich text formatting may change, and some custom editors may not be supported. Local builds are signed ad hoc; rebuilding may require granting Accessibility access again.
+The app temporarily uses and restores the clipboard. Its temporary writes are restricted to the current Mac and marked as transient and concealed for compatible clipboard managers. Clipboard access is shared with other local apps; fallback copying in custom editors is controlled by that editor and may still be captured or synced. Rich text formatting may change, and some custom editors may not be supported. Builds enable Hardened Runtime and are signed ad hoc; rebuilding may require granting Accessibility access again.
 
 Composition-based input methods, such as Chinese and Japanese IMEs, are not supported. Conversion uses ordinary, Shift, and Caps Lock keys; Option-only characters and dead-key compositions are left unchanged.
 
 [Usage and implementation notes (Russian)](docs/usage.md)
+
+[Security review and privacy limitations (Russian)](docs/security.md)
